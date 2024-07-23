@@ -37,5 +37,7 @@ class DataPenilaianFaktorRisiko extends Model
         'perdarahan_kehamilan',
         'pre_eklampsia',
         'risk_level',
+        'status',
+        'keterangan'
     ];
 }

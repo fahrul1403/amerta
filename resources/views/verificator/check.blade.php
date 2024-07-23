@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -124,6 +125,18 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
+                                Status
+                                <a href="#">
+                                    <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
                                 Action
                                 <a href="#">
                                     <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -166,9 +179,12 @@
                                     {{ $item->risk_level }}
                                 </span>
                             </td>
+                            <td class="px-6 py-4">
+                                {{ $item->status }}
+                            </td>
                             <td class="px-6 py-4 flex justify-center items-center gap-2">
-                                <a href="{{ url('/dashboard/admin/datapenilaianibuhamil/show', 1) }}"
-                                    class="font-medium text-white py-2 px-2 bg-emerald-500 flex items-center gap-2 rounded-lg">
+                                <a href="{{ route('verificator.detail', $item->id) }}"
+                                    class="font-medium text-white py-2 px-2 bg-amber-500 flex items-center gap-2 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -178,42 +194,288 @@
                                     </svg>
                                 </a>
 
-                                <a href="{{ url('/dashboard/admin/datapenilaianibuhamil/edit', 1) }}"
-                                    class="font-medium text-white py-2 px-2 bg-amber-500 flex items-center gap-2 rounded-lg">
+                                <button type="button" onclick="approval({{ $item->id }}, 1)"
+                                    class="font-medium text-white py-2 px-2 bg-emerald-500 flex items-center gap-2 rounded-lg {{ $item->status !== 'MENUNGGU APPROVAL' ? 'btn-disabled' : '' }}"
+                                    {{ $item->status !== 'MENUNGGU APPROVAL' ? 'disabled' : '' }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12l6 6L19.5 6" />
+                                    </svg>
+                                </button>
+
+                                <button type="button" onclick="reject({{ $item->id }}, 0)"
+                                    {{ $item->status !== 'MENUNGGU APPROVAL' ? 'disabled' : '' }}
+                                    class="font-medium text-white py-2 px-2 bg-red-500 rounded-lg {{ $item->status !== 'MENUNGGU APPROVAL' ? 'btn-disabled' : '' }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M18.83 3.17a2.25 2.25 0 0 1 3.18 3.18l-10.8 10.8a1.5 1.5 0 0 1-.7.4l-4.5 1.5a.75.75 0 0 1-.92-.92l1.5-4.5a1.5 1.5 0 0 1 .4-.7l10.8-10.8Z" />
+                                            d="M6 18L18 6M6 6l12 12" />
                                     </svg>
-                                </a>
-
-                                <form method="POST"
-                                    action="{{ url('/dashboard/admin/datapenilaianibuhamil/delete', 1) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="font-medium text-white py-2 px-2 bg-red-500 rounded-lg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M15 3.75v-1.5a.75.75 0 0 0-1.5 0v1.5h-3v-1.5a.75.75 0 0 0-1.5 0v1.5h-3v1.5h1.5v12h12v-12h1.5v-1.5h-3Zm-4.5 12a.75.75 0 0 0 .75.75h6a.75.75 0 0 0 .75-.75v-9a.75.75 0 0 0-.75-.75h-6a.75.75 0 0 0-.75.75v9Z" />
-                                        </svg>
-                                    </button>
-                                </form>
+                                </button>
 
                             </td>
                             <td class="px-3 py-3 flex justify-center items-center gap-1">
-                                <a href="{{ route('datapemeriksaan.shows', 1) }}"
+                                <a href="{{ route('verificator.penatalaksanashow', $item->id) }}"
                                     class="bg-primary py-3 px-3 rounded-xl text-white font-medium flex items-center gap-2 -ml-2">
-                                    Lakukan Penilaian Faktor Resiko
+                                    Penatalaksanaan
                                 </a>
-
+                            </td>
+                            <td class="px-3 py-3 flex justify-center items-center gap-1">
+                                <a href="{{ route('verificator.penatalaksana', $item->id) }}" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                                    class="bg-primary py-3 px-3 rounded-xl text-white font-medium flex items-center gap-2 -ml-2">
+                                    Pemantauan
+                                </a>
                             </td>
                         </tr>
+
+                        {{-- MODAL PEMANTAUAN --}}
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pemantauan</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">Lokasi
+                                                :</label>
+                                            <textarea type="date" id="lokasi{{ $item->id }}" name="lokasi" cols="3" rows="7"
+                                                class="form-control"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">Kabupaten
+                                                :</label>
+                                            <select id="id_kota{{ $item->id }}" class="form-control"
+                                                id="">
+                                                <option value="" selected disabled>pilih kota/kabupaten</option>
+                                                @foreach ($kota as $kotas)
+                                                    <option value="{{ $kotas->id_kota }}">{{ $kotas->kota }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">Kondisi
+                                                :</label>
+                                            <select id="status{{ $item->id }}" class="form-control"
+                                                id="">
+                                                <option value="" selected disabled>pilih kondisi</option>
+                                                <option value="HIDUP">HIDUP</option>
+                                                <option value="MENINGGAL">MENINGGAL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button onclick="savePemantauan({{ $item->id }})" type="button"
+                                            class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>
         </div>
+
+
+        <script lang="text/javascript">
+            function approval(id, flaging) {
+
+                let data = {
+                    id: id,
+                    flag: flaging,
+                }
+
+                Swal.fire({
+                    title: "anda yakin ingin melakukan approval ini ?",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "ya, saya yakin",
+                    denyButtonText: `batalkan`
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: `{{ url('/dashboard/verificator/approval') }}`,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            contentType: 'application/json',
+                            data: JSON.stringify(data),
+                            success: function(res) {
+                                if (res.status) {
+                                    Swal.fire(
+                                        '',
+                                        res.message,
+                                        'success'
+                                    ).then(() => {
+                                        location.reload()
+                                    });
+                                } else {
+
+                                    if (res.data.length < 1) {
+                                        Swal.fire(
+                                            '',
+                                            res.message,
+                                            'error'
+                                        )
+                                        return
+                                    }
+
+                                    var msg = '';
+                                    res.data.forEach((el) => {
+                                        msg += ` <div class="alert alert-danger">${el}</div>`;
+                                    });
+                                    $('#errorMsgupdate').html(msg);
+                                }
+
+                            },
+                            error: function(data, textStatus, errorThrown) {
+                                console.log(data);
+
+                            },
+                        });
+                    } else if (result.isDenied) {}
+                });
+            }
+
+            function savePemantauan(id) {
+
+                let data = {
+                    fk_id: id,
+                    lokasi: $('#lokasi' + id).val(),
+                    id_kota: $('#id_kota' + id).val(),
+                    status: $('#status' + id).val(),
+                }
+
+                Swal.fire({
+                    title: "anda yakin ingin melakukan submit pemantauan ini ?",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "ya, saya yakin",
+                    denyButtonText: `batalkan`
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: `{{ url('/dashboard/verificator/pemantauan') }}`,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            contentType: 'application/json',
+                            data: JSON.stringify(data),
+                            success: function(res) {
+                                if (res.status) {
+                                    Swal.fire(
+                                        '',
+                                        res.message,
+                                        'success'
+                                    ).then(() => {
+                                        location.reload()
+                                    });
+                                } else {
+
+                                    if (res.data.length < 1) {
+                                        Swal.fire(
+                                            '',
+                                            res.message,
+                                            'error'
+                                        )
+                                        return
+                                    }
+
+                                    var msg = '';
+                                    res.data.forEach((el) => {
+                                        msg += ` <div class="alert alert-danger">${el}</div>`;
+                                    });
+                                    $('#errorMsgupdate').html(msg);
+                                }
+
+                            },
+                            error: function(data, textStatus, errorThrown) {
+                                console.log(data);
+
+                            },
+                        });
+                    } else if (result.isDenied) {}
+                });
+            }
+
+            function reject(id, flaging) {
+
+                let data = {
+                    id: id,
+                    flag: flaging,
+                }
+
+                Swal.fire({
+                    title: "Anda yakin ingin melakukan approval ini?",
+                    input: 'text',
+                    inputLabel: 'Masukkan alasan',
+                    inputPlaceholder: 'Ketik alasan di sini...',
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "Ya, saya yakin",
+                    denyButtonText: `Batalkan`
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        data.reason = result.value; // Add the input value to the data object
+
+                        $.ajax({
+                            type: "POST",
+                            url: `{{ url('/dashboard/verificator/approval') }}`,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            contentType: 'application/json',
+                            data: JSON.stringify(data),
+                            success: function(res) {
+                                if (res.status) {
+                                    Swal.fire(
+                                        '',
+                                        res.message,
+                                        'success'
+                                    ).then(() => {
+                                        location.reload()
+                                    });
+                                } else {
+
+                                    if (res.data.length < 1) {
+                                        Swal.fire(
+                                            '',
+                                            res.message,
+                                            'error'
+                                        )
+                                        return
+                                    }
+
+                                    var msg = '';
+                                    res.data.forEach((el) => {
+                                        msg += ` <div class="alert alert-danger">${el}</div>`;
+                                    });
+                                    $('#errorMsgupdate').html(msg);
+                                }
+
+                            },
+                            error: function(data, textStatus, errorThrown) {
+                                console.log(data);
+                            },
+                        });
+                    } else if (result.isDenied) {
+                        // Handle deny action if needed
+                    }
+                });
+            }
+        </script>
 
 
     </div>

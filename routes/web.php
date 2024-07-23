@@ -67,9 +67,15 @@ Route::get('/dashboard/user/masukankader', [MasukanKaderController::class, 'inde
 
 // Verificator
 Route::get('/dashboard/verificator', [VerificatorController::class, 'index'])->name('verificator.index');
+Route::get('/dashboard/verificator/penatalaksana-history/{id}', [VerificatorController::class, 'history']);
 Route::get('/dashboard/verificator/check', [VerificatorController::class, 'check'])->name('verificator.check');
+Route::get('/dashboard/verificator/detail/{id}', [VerificatorController::class, 'detail'])->name('verificator.detail');
+Route::get('/dashboard/verificator/show/{id}', [VerificatorController::class, 'show'])->name('verificator.penatalaksanashow');
+Route::post('/dashboard/verificator/penatalaksana/{id}', [VerificatorController::class, 'penatalaksana'])->name('verificator.penatalaksana');
 Route::post('/dashboard/verificator/approve/{id}', [DataPemeriksaanController::class, 'approve'])->name('datapemeriksaan.approve');
 Route::post('/dashboard/verificator/reject/{id}', [DataPemeriksaanController::class, 'reject'])->name('datapemeriksaan.reject');
+Route::post('/dashboard/verificator/approval', [VerificatorController::class, 'approval']);
+Route::post('/dashboard/verificator/pemantauan', [VerificatorController::class, 'pemantauan']);
 
 
 Route::resource('dataibuhamil', DataIbuHamilController::class);
