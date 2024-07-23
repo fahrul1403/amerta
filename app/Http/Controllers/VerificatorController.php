@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataPemeriksaan;
+use App\Models\DataPenilaianFaktorRisiko;
 use Illuminate\Http\Request;
 
 class VerificatorController extends Controller
@@ -14,10 +15,10 @@ class VerificatorController extends Controller
 
     public function check()
     {
-        $datapemeriksaan = DataPemeriksaan::all();
-        $getDataPemeriksaanCount = $datapemeriksaan->count();
+        $data['verif'] = DataPenilaianFaktorRisiko::join('dataibuhamil', 'datapenilaianfaktorrisiko.id_ibuhamil', '=', 'dataibuhamil.id')->get();
+        $data['count'] = DataPenilaianFaktorRisiko::join('dataibuhamil', 'datapenilaianfaktorrisiko.id_ibuhamil', '=', 'dataibuhamil.id')->count();
 
-        return view('verificator.check', compact('datapemeriksaan', 'getDataPemeriksaanCount'));
+        return view('verificator.check', $data);
     }
     public function approve(Request $request, $id)
     {
