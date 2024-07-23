@@ -418,7 +418,7 @@
                 }
 
                 Swal.fire({
-                    title: "Anda yakin ingin melakukan approval ini?",
+                    title: "Apakah anda yakin menolak data ini?",
                     input: 'text',
                     inputLabel: 'Masukkan alasan',
                     inputPlaceholder: 'Ketik alasan di sini...',
