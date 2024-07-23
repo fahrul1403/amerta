@@ -51,6 +51,7 @@ Route::get('/dashboard/admin/datapenilaianibuhamil', [DataPenilaianIbuHamilContr
 
 // Route to show a specific record
 Route::get('/dashboard/admin/datapenilaianibuhamil/show/{id}', [DataPenilaianIbuHamilController::class, 'show'])->name('datapenilaianibuhamil.show');
+Route::get('/dashboard/admin/datafaktorresiko/show/{id}', [DataPenilaianIbuHamilController::class, 'detail_faktor_resiko'])->name('faktorresiko.show');
 
 // Route to edit a specific record
 Route::get('/dashboard/admin/datapenilaianibuhamil/edit/{id}', [DataPenilaianIbuHamilController::class, 'edit'])->name('datapenilaianibuhamil.edit');

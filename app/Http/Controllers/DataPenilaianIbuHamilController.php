@@ -54,12 +54,15 @@ class DataPenilaianIbuHamilController extends Controller
         return view('datapemeriksaan.index', compact('datapenilaianibuhamil', 'getdatapenilaianibuhamilCount', 'datapemeriksaan'));
     }
 
-    public function show($id = 18)
+    public function show($id)
     {
-        // dd($id);
-        $data['dataibuhamil'] = DB::table('dataibuhamil')->where('id', $id)->first();
-        // dd($data['dataibuhamil']);
+        $data['dataibuhamil'] = DB::table('datapenilaianibuhamil')->where('data_ibu_hamil_id', $id)->first();
         return view('datapemeriksaan.view', $data);
+    }
+
+    public function detail_faktor_resiko($id){
+        $data['dataibuhamil'] = DB::table('datapenilaianfaktorrisiko')->where('id_ibuhamil', $id)->first();
+        return view('datapenilaian.faktor_resiko_detail', $data);
     }
 
 

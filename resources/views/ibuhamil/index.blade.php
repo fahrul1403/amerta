@@ -31,7 +31,7 @@
     @show
 
     @include('include.headers')
-    <div class="w-full lg:max-w-4xl lg:ml-72 lg:px-5 mt-7 relative">
+    <div class="container-fluid w-full lg:max-w-4xl lg:ml-72 lg:px-5 mt-7 relative">
         {{-- Toast Notification --}}
         @if (session()->has('success'))
             <div id="toast-success"
@@ -110,6 +110,12 @@
                             SARAN
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            STATUS
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            KETERANGAN DITOLAK
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 AKSI
                                 <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
@@ -131,6 +137,8 @@
                             <td class="px-6 py-4">{{ $hasil->nik }}</td>
                             <td class="px-6 py-4">{{ $hasil->risk_level }}</td>
                             <td class="px-6 py-4">{{ $hasil->saran }}</td>
+                            <td class="px-6 py-4">{{ $hasil->status }}</td>
+                            <td class="px-6 py-4">{{ $hasil->keterangan ?? '-' }}</td>
                             <td class="px-6 py-4 flex justify-center items-center gap-2">
                                 {{-- @if (Auth::user()->isAdmin()) --}}
 

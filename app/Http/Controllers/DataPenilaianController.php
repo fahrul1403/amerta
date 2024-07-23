@@ -28,9 +28,8 @@ class DataPenilaianController extends Controller
     public function listUser()
     {
         $data['getDataIbuHamilCount'] = DataIbuHamil::count();
-        $data['datas'] = DataPenilaianFaktorRisiko::join('dataibuhamil', 'datapenilaianfaktorrisiko.id_ibuhamil', '=', 'dataibuhamil.id')
-            ->get();
-        // dd($data['datas']);
+        $data['datas'] = DataPenilaianFaktorRisiko::join('dataibuhamil', 'datapenilaianfaktorrisiko.id_ibuhamil', '=', 'dataibuhamil.id')->get();
+
         return view('datapenilaian.listUser', $data);
     }
 

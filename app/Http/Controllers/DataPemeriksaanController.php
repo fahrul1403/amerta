@@ -151,7 +151,7 @@ class DataPemeriksaanController extends Controller
         $data['getDataIbuHamilCount'] = DataPenilaianFaktorRisiko::count();
 
         $datanya = DataPenilaianFaktorRisiko::join('dataibuhamil', 'datapenilaianfaktorrisiko.id_ibuhamil', '=', 'dataibuhamil.id')
-            ->get();
+        ->get();
 
         foreach ($datanya as $key => $value) {
             if ($value->risk_level == "Risiko tinggi") {
@@ -164,7 +164,6 @@ class DataPemeriksaanController extends Controller
         }
 
         $data['datas'] = $datanya;
-
         return view('ibuhamil.index', $data);
     }
 }

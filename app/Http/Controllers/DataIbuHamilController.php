@@ -6,6 +6,7 @@ use App\Models\DataIbuHamil;
 use App\Models\DataPenilaianIbuHamil;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DataIbuHamilController extends Controller
 {
@@ -60,32 +61,28 @@ class DataIbuHamilController extends Controller
     public function storePenilaian(Request $request, $id)
     {
         // Validate the form data
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'hpht' => 'required|date',
+            'tanggal_periksa' => 'required|date',
             'usia_kehamilan' => 'required|integer',
             'tempat_periksa' => 'required|string',
             'berat_badan' => 'required|numeric',
             'tinggi_badan' => 'required|numeric',
             'lila' => 'required|numeric',
             'tekanan_darah' => 'required|string',
-            'tfu' => 'required|numeric',
-            'letak' => 'required|string',
-            'djj' => 'required|integer',
-            'status_imunisasi' => 'required|string',
-            'konseling' => 'required|string',
-            'ttd' => 'required|string',
-            'ppia_hiv' => 'required|string',
-            'ppia_sifilis' => 'required|string',
-            'ppia_hepatitis_b' => 'required|string',
-            'tata_laksana_kasus' => 'required|string',
+            'gerak_anak' => 'required|string',
             'nama' => 'required|string',
             'nik' => 'required|string',
         ]);
 
+        if ($validator->fails()) {
+            return redirect('verifikator')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         // Store the data in the datapenilaianibuhamil table
-        $penilaian = new DataPenilaianIbuHamil($validatedData);
-        $penilaian->data_ibu_hamil_id = $id;
-        $penilaian->save();
+        DataPenilaianIbuHamil::create($request->all());
 
         return redirect()->route('dataibuhamil.index')->with('success', 'Penilaian berhasil disimpan');
     }
