@@ -36,7 +36,8 @@ class VerificatorController extends Controller
         ->where('datapenilaianfaktorrisiko.id_ibuhamil', $id)->first();
 
         $data['penatalaksana'] = Penatalaksana::where('fk_id', $id)->get();
-        $data['pemantauan'] = Pemantauan::where('fk_id', $id)->get();
+        $data['pemantauan'] = Pemantauan::join('kota', 'pemantauan.id_kota', '=', 'kota.id_kota')
+        ->where('fk_id', $id)->get();
 
         $data['id'] = $id;
         return view('verificator.detail', $data);

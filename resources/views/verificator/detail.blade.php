@@ -99,7 +99,7 @@
                                     <tr align="center">
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->lokasi }}</td>
-                                        <td>{{ $item->id_kota }}</td>
+                                        <td>{{ $item->kota }}</td>
                                         <td>{{ $item->created_at }}</td>
                                     </tr>
                                 @endforeach
