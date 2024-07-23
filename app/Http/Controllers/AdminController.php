@@ -41,7 +41,7 @@ class AdminController extends Controller
             if(count($counts) < 1){
                 array_push($data_total, 0);
             }else{
-                array_push($data_total, $counts[0]->total);
+                array_push($data_total, (int)$counts[0]->total);
             }
         }
 
