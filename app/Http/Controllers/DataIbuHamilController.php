@@ -126,8 +126,8 @@ class DataIbuHamilController extends Controller
      */
     public function createPenilaian($id)
     {
-        $ibuHamil = DataIbuHamil::findOrFail($id);
-        return view('dataibuhamil.create_datapenilaianibuhamil', compact('ibuHamil'));
+        $data['ibuHamil'] = DataIbuHamil::findOrFail($id);
+        return view('dataibuhamil.create_datapenilaianibuhamil', $data);
     }
 
     /**
