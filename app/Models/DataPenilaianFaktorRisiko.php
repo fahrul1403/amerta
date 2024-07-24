@@ -38,6 +38,7 @@ class DataPenilaianFaktorRisiko extends Model
         'pre_eklampsia',
         'risk_level',
         'status',
-        'keterangan'
+        'keterangan',
+        'id_ibuhamil'
     ];
 }
